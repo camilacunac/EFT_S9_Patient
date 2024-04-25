@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class PatientRepositoryTest {
 
         // Crea oaciente
         Patient patient = new Patient("17786044-1", "Gabriela", "Ramírez", "Vargas",
-                "20-09-1997", 'F', "Avenida Principal 456",
+                new Date(), 'F', "Avenida Principal 456",
                 "+56998765432", "gabriela.ramirez@example.com");
 
         // Guarda paciente en BD

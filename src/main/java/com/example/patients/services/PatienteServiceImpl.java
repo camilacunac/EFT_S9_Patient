@@ -145,9 +145,6 @@ public class PatienteServiceImpl implements PatientService {
             if (patient.isPresent()) {
                 Patient updatedPatient = patient.get();
                 updatedPatient.setDireccion(direccion.getDireccion());
-                String[] partesFechaNac = updatedPatient.getFechaNacimiento().substring(0, 10).split("-");
-                String invertedFechaNac = partesFechaNac[2] + "-" + partesFechaNac[1] + "-" + partesFechaNac[0];
-                updatedPatient.setFechaNacimiento(invertedFechaNac);
                 Patient savedPatient = patientRepository.save(updatedPatient);
                 res = new Response("success", savedPatient, "");
                 return ResponseEntity.status(HttpStatus.OK).body(res);
