@@ -1,0 +1,4 @@
+com\example\patients\PatientsApplicationTests.class
+com\example\patients\repository\PatientRepositoryTest.class
+com\example\patients\services\PatientServceTest.class
+com\example\patients\controller\PatientControllerTest.class

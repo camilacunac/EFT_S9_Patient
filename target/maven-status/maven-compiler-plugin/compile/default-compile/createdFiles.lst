@@ -1,0 +1,14 @@
+com\example\patients\model\Consultation.class
+com\example\patients\services\PatienteServiceImpl.class
+com\example\patients\model\Attention.class
+com\example\patients\repository\AttentionRepository.class
+com\example\patients\dto\AttentionDTO.class
+com\example\patients\model\Patient.class
+com\example\patients\services\PatientService.class
+com\example\patients\model\Response.class
+com\example\patients\controller\PatientController.class
+com\example\patients\PatientsApplication.class
+com\example\patients\dto\UpdateDirectionDTO.class
+com\example\patients\repository\ConsultationRepository.class
+com\example\patients\repository\PatientRepository.class
+com\example\patients\dto\ConsultationDTO.class
