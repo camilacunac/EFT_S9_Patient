@@ -31,7 +31,7 @@ class PatientRepositoryTest {
     }
 
     @Test
-    void saveUserTest() {
+    void savePatientTest() {
 
         // Crea oaciente
         Patient patient = new Patient("17786044-1", "Gabriela", "Ramírez", "Vargas",

@@ -31,7 +31,7 @@ class PatientControllerTest {
         private PatienteServiceImpl patientServiceMock;
 
         @Test
-        void getAllUsers() throws Exception {
+        void getAllPatients() throws Exception {
                 // Crear una lista de pacientes simulada
                 List<Patient> patientList = new ArrayList<>();
                 patientList.add(new Patient("12345678-9", "Juan", "Pérez", "González", new Date(), 'M',
