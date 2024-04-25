@@ -1,5 +1,7 @@
 package com.example.patients.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +31,7 @@ public class Patient {
     private String apellidoMaterno;
 
     @Column(name = "fecha_nacimiento")
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
 
     @Column(name = "genero")
     private char genero;
@@ -48,7 +50,7 @@ public class Patient {
     }
 
     public Patient(String rut, String nombre, String apellidoPaterno, String apellidoMaterno,
-            String fechaNacimiento, char genero, String direccion, String telefono, String email) {
+            Date fechaNacimiento, char genero, String direccion, String telefono, String email) {
         this.rut = rut;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -100,11 +102,11 @@ public class Patient {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
