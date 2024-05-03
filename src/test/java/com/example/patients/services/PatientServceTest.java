@@ -1,12 +1,14 @@
 package com.example.patients.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.example.patients.dto.UpdateDirectionDTO;
 import com.example.patients.model.Patient;
 import com.example.patients.model.Response;
 import com.example.patients.repository.PatientRepository;
@@ -82,6 +85,44 @@ class PatientServceTest {
                 assertEquals("success", response.getBody().getState());
                 assertEquals(newPatient, response.getBody().getResponse());
                 assertTrue(response.getBody().getError().isEmpty());
+        }
+
+        @Test
+        void getPatientByIdTest() {
+                // Arrange
+                Long patientId = 1L;
+                Patient mockPatient = new Patient("12345678-9", "Juan", "Pérez", "González", new Date(), 'M',
+                                "Calle 123", "+56987654321", "juanperez@example.com");
+
+                // Act
+                when(patientRepository.findById(patientId)).thenReturn(Optional.of(mockPatient));
+                ResponseEntity<Response> response = patientService.getPatientById(patientId);
+
+                // Assert
+                assertEquals(HttpStatus.OK, response.getStatusCode());
+                assertNotNull(response.getBody());
+                assertEquals("success", response.getBody().getState());
+                assertEquals(Optional.of(mockPatient), response.getBody().getResponse());
+        }
+
+        @Test
+        void updatePatientDirectionTest() {
+                // Arrange
+                Long patientId = 1L;
+                Patient mockPatient = new Patient("12345678-9", "Juan", "Pérez", "González", new Date(), 'M',
+                                "Calle 123", "+56987654321", "juanperez@example.com");
+
+                // Act
+                UpdateDirectionDTO directionDTO = new UpdateDirectionDTO("Calle Test 123");
+                when(patientRepository.findById(patientId)).thenReturn(Optional.of(mockPatient));
+                mockPatient.setDireccion("Calle Test 123");
+                when(patientRepository.save(mockPatient)).thenReturn(mockPatient);
+                ResponseEntity<Response> response = patientService.updatePatientDirection(patientId, directionDTO);
+
+                // Assert
+                assertNotNull(response.getBody());
+                assertEquals("success", response.getBody().getState());
+                assertEquals(mockPatient, response.getBody().getResponse());
         }
 
 }

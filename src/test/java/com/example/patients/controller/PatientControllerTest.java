@@ -1,6 +1,7 @@
 package com.example.patients.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.example.patients.dto.UpdateDirectionDTO;
 import com.example.patients.model.Patient;
 import com.example.patients.model.Response;
 import com.example.patients.services.PatienteServiceImpl;
@@ -117,6 +119,50 @@ class PatientControllerTest {
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.email")
                                                 .value(newPatient.getEmail()))
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.rut").value(newPatient.getRut()));
+        }
+
+        @Test
+        void getPatientById() throws Exception {
+                // Arrange
+                Long patientId = 1L;
+                Patient patient = new Patient("12345678-9", "Juan", "Pérez", "González", new Date(), 'M',
+                                "Calle 123", "+56987654321", "juanperez@example.com");
+                Response response = new Response("success", patient, "");
+                ResponseEntity<Response> serviceResponse = ResponseEntity.ok(response);
+
+                // Act
+                when(patientServiceMock.getPatientById(patientId)).thenReturn(serviceResponse);
+
+                // Assert
+                mockMvc.perform(MockMvcRequestBuilders.get("/paciente/{id}", patientId))
+                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.state").value("success"))
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(""))
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.rut").value(patient.getRut()));
+        }
+
+        @Test
+        void updatePatientDirectionTest() throws Exception {
+                // Arange
+                Long patientId = 1L;
+                Patient patient = new Patient("12345678-9", "Juan", "Pérez", "González", new Date(), 'M',
+                                "Calle 123", "+56987654321", "juanperez@example.com");
+                patient.setDireccion("Calle Test 123");
+                Response response = new Response("success", patient, "");
+                ResponseEntity<Response> serviceResponse = ResponseEntity.ok(response);
+
+                // Act
+                when(patientServiceMock.updatePatientDirection(eq(patientId), any(UpdateDirectionDTO.class)))
+                                .thenReturn(serviceResponse);
+
+                // Assert
+                mockMvc.perform(MockMvcRequestBuilders.put("/paciente/{idPatient}/actualizar-direccion", patientId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{ \"direccion\": \"Calle Test 123\" }"))
+                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.state").value("success"))
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.direccion")
+                                                .value(patient.getDireccion()));
         }
 
 }
